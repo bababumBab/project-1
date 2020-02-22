@@ -3,9 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project 1</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/app.js"></script>
+  <title>Project 1 - The Real Ultimate Tic Tac Toe</title>
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <h1>Hello world</h1>
+  <div class="body-header">
+    <p id="status">Player 0 should play!</p>
+    <p class="main-text">Working your way to Ultimate Tic Tac Toe</p>
+    <button id="reset" class="reset-btn">Reset Game &cularr;</button>
+  </div>
+
+  <div class="modal-wrapper">
+    <div class="modal">
+      <div class="head">
+        <h3>What you want to play as?</h3>
+      </div>
+      <button id="playAsX">X</button>
+      <button id="playAs0">O</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="grid">
+      <div id="hole" class="box" data-index="0"></div>
+      <div id="hole" class="box" data-index="1"></div>
+      <div id="hole" class="box" data-index="2"></div>
+      <div id="hole" class="box" data-index="3"></div>
+      <div id="hole" class="box" data-index="4"></div>
+      <div id="hole" class="box" data-index="5"></div>
+      <div id="hole" class="box" data-index="6"></div>
+      <div id="hole" class="box" data-index="7"></div>
+      <div id="hole" class="box" data-index="8"></div>
+    </div>
+  </div>
+
+  
 </body>
 </html>

@@ -1,103 +1,236 @@
-
 /* eslint-disable no-undef */
+function setUpGame() {
+  const X_CLASS = 'x'
+  const CIRCLE_CLASS = 'circle'
+  const WINNING_COMBINATIONS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
+  const cellElements = document.querySelectorAll('[data-cell]')
+  const board = document.getElementById('largeBoard')
+  const winningMessageElement = document.getElementById('winningMessage')
+  const restartButton = document.getElementById('restartButton')
+  const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
+  let circleTurn
 
-function main() {
-  const state = {
-    zeroShouldPlay: true,
-    board: Array(9).fill(null)
+  console.log(board)
+
+  startGame()
+
+  restartButton.addEventListener('click', () => {
+    window.location.reload(startGame)
+  })
+
+  function disableTiles() {
+    cellElements.forEach(cell => {
+      cell.removeEventListener('click', handleClick)
+      // cell.style.backgroundColor = 'red'
+    })
+  }
+  function enableTile(game) {
+    document.getElementById('tile-' + game).querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
+      cell.addEventListener('click', handleClick, { once: true })
+      // placeMark()
+      // cell.style.backgroundColor = 'green'
+    })
+  }
+  function enableAllTiles() {
+    document.querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
+      cell.addEventListener('click', handleClick, { once: true })
+    })
+  }
+  function disableWonGame(game) {
+    document.getElementById('tile-' + game).querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
+      cell.classList.add('disabled')
+      if (cell.classList.contains(X_CLASS)) {
+        cell.style.backgroundColor = 'red'
+      } else cell.style.backgroundColor = 'blue'
+    })
   }
 
-  // take the event and be a HOC for all functions
-  const main = (e) => {
-    const index = e.target.dataset.index
-    play(index)
-    // playForMe(state.board)
+  function startGame() {
+    circleTurn = false
+    cellElements.forEach(cell => {
+      cell.classList.remove(X_CLASS)
+      cell.classList.remove(CIRCLE_CLASS)
+      cell.removeEventListener('click', handleClick)
+      cell.addEventListener('click', handleClick, { once: true })
+    })
+    setBoardHoverClass()
+    winningMessageElement.classList.remove('show')
   }
 
-  const play = (index) => {
-    // skip if the box is already filled or someone already won
-    if (calculateWinner(state.board) || state.board[index]) return
-    // what should I play ?
-    state.board[index] = state.zeroShouldPlay ? '0' : 'X'
-    // debug
-    console.log(state.board, state.zeroShouldPlay, calculateWinner(state.board))
-    // change the player
-    state.zeroShouldPlay = !state.zeroShouldPlay
-    // handle the DOM for me :)
-    render(state.board)
+  function placeMark(cell, currentClass) {
+    cell.classList.add(currentClass)
   }
 
-  // const playForMe = (boardConfig) => {
-    // const playAt = Math.floor(Math.random() * 9)
-    // if (boardConfig[playAt] === null)
-      // return play(playAt)
-    // return playForMe(boardConfig)
+
+  function swapTurns() {
+    circleTurn = !circleTurn
+  }
+
+  function setBoardHoverClass() {
+
+    board.classList.remove(X_CLASS)
+    board.classList.remove(CIRCLE_CLASS)
+    if (circleTurn) {
+      board.classList.add(CIRCLE_CLASS)
+    } else {
+      board.classList.add(X_CLASS)
+    }
+  }
+
+  function checkWin(currentClass) {
+    return WINNING_COMBINATIONS.some(combination => {
+      return combination.every(index => {
+        return cellElements[index].classList.contains(currentClass)
+      })
+    })
+  }
+
+  function handleClick(e) {
+    const cell = e.target
+    const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
+    placeMark(cell, currentClass)
+
+    const gameWon = winBigGame() // creating the variable that helps in finishin the game
+    
+    if (gameWon === '0' || gameWon === 'X') {
+      winningMessageTextElement.innerText = `${circleTurn ? 'O\'s' : 'X\'s'} Wins!`
+      winningMessageElement.classList.add('show')
+    } else if (gameWon === 'draw') {
+      document.getElementById('winning-message').innerHTML = 'Game over. It\'s a draw!'
+    }
+    
+    const targetTile = cell.id.split('-')[2]
+    if (winSmallGame(targetTile) === null) { //small game in progress 
+      disableTiles()
+      enableTile(targetTile)
+      setBoardHoverClass()
+    } else {
+      disableWonGame(targetTile)             // small game finished and click disabled
+      enableAllTiles()
+      setBoardHoverClass()
+    }
+    const currentGame = cell.id.split('-')[1]
+    winSmallGame(currentGame)                 //small game finished(w || L || D) needs to be disabled
+    if (currentClass === true) {
+      disableWonGame(targetTile)
+      setBoardHoverClass()
+    }
+    swapTurns()
+    setBoardHoverClass()
+  }
+
+  function winSmallGame(game) {
+    const tiles = document.getElementById('tile-' + game).querySelectorAll('[data-cell]')
+    if (WINNING_COMBINATIONS.some(combination => {
+      return combination.every(index => {
+        return tiles[index].classList.contains(X_CLASS)
+      })
+    })) {
+      return 'X'
+    }
+    if (WINNING_COMBINATIONS.some(combination => {
+      return combination.every(index => {
+        return tiles[index].classList.contains(CIRCLE_CLASS)
+      })
+    })) {
+      return '0'
+    }
+    if ([...tiles].every(cell => {
+      return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
+    })) {
+      return 'draw'
+    } else {
+      return null
+    }
+  }
+
+
+  function winBigGame() {
+    const games = []
+    for (i = 1; i <= 9; i++) {
+      games.push(winSmallGame(i.toString()))
+    }
+    if (WINNING_COMBINATIONS.some(combination => {
+      return combination.every(index => {
+        return games[index] === 'X'
+      })
+    })) {
+      return 'X'
+    }
+    if (WINNING_COMBINATIONS.some(combination => {
+      return combination.every(index => {
+        return games[index] === '0'
+      })
+    })) {
+      return '0'
+    }
+    if ([...games].every(game => {
+      return game === 'X' || game === '0'
+    })) {
+      return 'draw'
+    } else {
+      return null
+    }
+  }
+
+  // if (largeEmptyCells === 0 && largeGameOver === false) {
+  //   document.getElementById('winner').innerHTML = 'Game over. It\'s a draw!' 
+  //   largeGameOver[largeSelected] = true
+
   // }
 
-  const render = (arr) => {
-    const $ = s => document.querySelector(s)
-    const $$ = s => document.querySelectorAll(s)
-    const playerName = state.zeroShouldPlay ? '0' : 'X'
-
-    // hell the dom
-    $$('#hole').forEach((element, index) => element.innerHTML = arr[index] || '')
-    $('#status').innerHTML = `Player ${playerName} should play!`
-    // finally give up if someone won
-    if (calculateWinner(state.board)) {
-      $('#status').innerHTML = `player ${calculateWinner(state.board)} Won!`
-      $('#reset').classList.add('primary')
-    }
-  }
-
-  const calculateWinner = (squares) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i]
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a]
-      }
-    }
-    return null
-  }
 
 
-  // heck event listners
-  document.querySelectorAll('#hole')
-    .forEach(element => { 
-      element.addEventListener('click', main) 
-    })
+  //to refactor below:
+  // function endGame(draw) {
+  //   if (draw) {
+  //     winningMessageTextElement.innerText = 'Draw!'
+  //   } else {
+  //     winningMessageTextElement.innerText = `${circleTurn ? 'O\'s' : 'X\'s'} Wins!`
+  //   }
+  //   winningMessageElement.classList.add('show')
+  // }
 
-  document.querySelector('#reset')
-    .addEventListener('click', (e) => {
-      render(Array(9).fill(null))
-      state.board.fill(null)
-      e.target.classList.remove('primary')
-    })
+  // function isDraw() {
+  //   return [...cellElements].every(cell => {
+  //     return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
+  //   })
+  // }
 
-  const modal = document.querySelector('.modal-wrapper')
-  // do nothing
-  document.querySelector('#playAs0')
-    .addEventListener('click',
-      (e) => {
-        modal.classList.add('none')
-      })
+  // function placeMark(cell, currentClass) {
+  //   cell.classList.add(currentClass)
+  // }
 
-  // change state
-  document.querySelector('#playAsX')
-    .addEventListener('click',
-      (e) => {
-        modal.classList.add('none')
-        state.zeroShouldPlay = !state.zeroShouldPlay
-      })
+  // function swapTurns() {
+  //   circleTurn = !circleTurn
+  // }
+
+  // function setBoardHoverClass() {
+  //   board.classList.remove(X_CLASS)
+  //   board.classList.remove(CIRCLE_CLASS)
+  //   if (circleTurn) {
+  //     board.classList.add(CIRCLE_CLASS)
+  //   } else {
+  //     board.classList.add(X_CLASS)
+  //   }
+  // }
+
+  // function checkWin(currentClass) {
+  //   return WINNING_COMBINATIONS.some(combination => {
+  //     return combination.every(index => {
+  //       return cellElements[index].classList.contains(currentClass)
+  //     })
+  //   })
+  // }
 
 }
-window.addEventListener('DOMContentLoaded', main)
+window.addEventListener('DOMContentLoaded', setUpGame)

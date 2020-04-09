@@ -207,7 +207,49 @@ p {
 }
 
 
+@media only screen and (max-width: 600px) {
+  main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 
+  .largeBoard {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* .largeTile {
+    display: flex;
+    flex-direction: row;
+  } */
+  
+  .rules {
+    width: 90vw;
+  }
+
+  section.largeTile {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  div.largeTile {
+    width: 30vw;
+  }
+
+  div.smallBoard {
+    width: 100vw;
+  }
+
+  .box {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    border: 1px solid black;
+  }
+}
 
 
 

@@ -18,6 +18,7 @@ body {
 }
 
 .rules{
+  display: flexbox;
   flex: 1;
   flex-direction: row;
   color: rgb(22, 15, 15);
@@ -42,7 +43,7 @@ header {
   margin-bottom: 5px;
   align-content: center;
   font-weight: 900;
-  /* position: fixed; */
+  
 }
 main {
   background-image: url(../images/newbackground.jpg);
@@ -65,12 +66,13 @@ section {
   margin: 150px;
 }
 p {
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: center;
   font-weight: 900;
-  background-color: rgba(26, 24, 24, 0.212); 
-  color: rgb(23, 24, 23);
+  background-color: rgba(104, 100, 100, 0); 
+  color: rgb(233, 241, 233);
+}
+.prulestitle{
+  background-color: rgba(104, 100, 100, 0);
+  justify-content: center;
 }
 .board {
   display: grid;
@@ -81,8 +83,9 @@ p {
   grid-template-columns: repeat(3, auto);
 }
 #largeBoard {
-  /* margin-top: 100px; */
-  flex: 3
+ 
+  flex: 3;
+  align-content: center;
 }
 .largeTile {
   margin: 10px;
@@ -95,7 +98,7 @@ p {
 .box {
   width: var(--cell-size);
   height: var(--cell-size);
-  border: 5px solid rgba(17, 17, 17, 0.685);
+  border: 5px solid rgb(233, 241, 233);
   display: flex;
   justify-content: center;
   align-items: center;

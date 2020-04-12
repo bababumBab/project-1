@@ -30,21 +30,21 @@ function setUpGame() {
   function disableTiles() {
     cellElements.forEach(cell => {
       cell.removeEventListener('click', handleClick)
-      // cell.style.backgroundColor = 'red'
     })
-  }
+  } return setBoardHoverClass()
+
   function enableTile(game) {
     document.getElementById('tile-' + game).querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
-      cell.addEventListener('click', handleClick, { once: true })
-      // placeMark()
-      // cell.style.backgroundColor = 'green'
+      cell.addEventListener('click', handleClick, { once: true }, setBoardHoverClass())
     })
-  }
+  } 
+
   function enableAllTiles() {
     document.querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
       cell.addEventListener('click', handleClick, { once: true })
     })
-  }
+  } 
+
   function disableWonGame(game) {
     document.getElementById('tile-' + game).querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {
       cell.classList.add('disabled')
@@ -57,6 +57,7 @@ function setUpGame() {
   function startGame() {
     circleTurn = false
     cellElements.forEach(cell => {
+      setBoardHoverClass()
       cell.classList.remove(X_CLASS)
       cell.classList.remove(CIRCLE_CLASS)
       cell.removeEventListener('click', handleClick)
@@ -101,7 +102,7 @@ function setUpGame() {
 
     const gameWon = winBigGame() // creating the variable that helps in finishin the game
     
-    if (gameWon === '0' || gameWon === 'X') {
+    if (gameWon === CIRCLE_CLASS || gameWon === X_CLASS) {
       winningMessageTextElement.innerText = `${circleTurn ? 'O\'s' : 'X\'s'} Wins!`
       winningMessageElement.classList.add('show')
     } else if (gameWon === 'draw') {
@@ -112,11 +113,11 @@ function setUpGame() {
     if (winSmallGame(targetTile) === null) { //small game in progress 
       disableTiles()
       enableTile(targetTile)
-      setBoardHoverClass()
+      setBoardHoverClass(targetTile)
     } else {
       disableWonGame(targetTile)             // small game finished and click disabled
       enableAllTiles()
-      setBoardHoverClass()
+      setBoardHoverClass(targetTile)
     }
     const currentGame = cell.id.split('-')[1]
     winSmallGame(currentGame)                 //small game finished(w || L || D) needs to be disabled
@@ -125,7 +126,7 @@ function setUpGame() {
       setBoardHoverClass()
     }
     swapTurns()
-    setBoardHoverClass()
+    setBoardHoverClass(targetTile)
   }
 
   function winSmallGame(game) {
@@ -135,14 +136,14 @@ function setUpGame() {
         return tiles[index].classList.contains(X_CLASS)
       })
     })) {
-      return 'X'
+      return X_CLASS
     }
     if (WINNING_COMBINATIONS.some(combination => {
       return combination.every(index => {
         return tiles[index].classList.contains(CIRCLE_CLASS)
       })
     })) {
-      return '0'
+      return CIRCLE_CLASS
     }
     if ([...tiles].every(cell => {
       return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
@@ -161,20 +162,20 @@ function setUpGame() {
     }
     if (WINNING_COMBINATIONS.some(combination => {
       return combination.every(index => {
-        return games[index] === 'X'
+        return games[index] === X_CLASS
       })
     })) {
-      return 'X'
+      return X_CLASS
     }
     if (WINNING_COMBINATIONS.some(combination => {
       return combination.every(index => {
-        return games[index] === '0'
+        return games[index] === CIRCLE_CLASS
       })
     })) {
-      return '0'
+      return CIRCLE_CLASS
     }
     if ([...games].every(game => {
-      return game === 'X' || game === '0'
+      return game === X_CLASS || game === CIRCLE_CLASS
     })) {
       return 'draw'
     } else {

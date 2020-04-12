@@ -17,9 +17,10 @@ body {
   font-family: 'EB Garamond', menlo, monospace;
 }
 
-.rules{
-  display: flexbox;
-  flex: 1;
+div.rules{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
   color: rgb(22, 15, 15);
   width: 400px;
@@ -28,12 +29,13 @@ body {
   align-items: center;
   padding: 60px;
   margin: 1px solid rgba(17, 17, 17, 0.918);
-  
 }
 
 header {
-  background-image: url(../images/newbackground.jpg);
+  background: linear-gradient(-45deg, #3f51b1 0%, #5a55ae 13%, #7b5fac 25%, #8f6aae 38%, #a86aa4 50%, #cc6b8e 62%, #f18271 75%, #f3a469 87%, #f7c978 100%);
   width: 100vw;
+  background-size:  400% 400%;
+  animation: gradient 20s ease infinite;
   height: 20vh;
   margin-top: 10px; 
   display: flex;
@@ -46,8 +48,11 @@ header {
   
 }
 main {
-  background-image: url(../images/newbackground.jpg);
-  background-size: cover;
+  background: linear-gradient(-45deg, #5064da 0%, #3c36aa 13%, #611fd4 25%, #1c2b41 38%, #537992 50%, #201a6d 62%, #199ad6 75%, #416ce2 87%, #61b5ec 100%);
+  /* background-image: url(../images/newbackground.jpg);
+  background-size: cover; */
+  background-size:  400% 400%;
+  animation: gradient 20s ease infinite;
   width: 100vw;
   height: 150vh;
   display: flex;
@@ -58,6 +63,19 @@ main {
   border: 10px solid rgb(247, 244, 240);
   /* flex: 2; */
 }
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+
 section {
   display: flex;
   justify-content: center;
@@ -66,14 +84,23 @@ section {
   margin: 150px;
 }
 p {
-  font-weight: 900;
-  background-color: rgba(104, 100, 100, 0); 
-  color: rgb(233, 241, 233);
+  flex-wrap: wrap;
+  align-content: center;
+  font-weight: 200;
+  font-size: 30px;
+  font-family: 'EB Garamond', menlo, monospace;
+  color: rgb(231, 225, 225);
 }
-.prulestitle{
-  background-color: rgba(104, 100, 100, 0);
+
+p.rules {
+  align-content: center;
+  font-weight: 100;
+  font-size: 15px;
+  font-family: 'EB Garamond', menlo, monospace;
+  color: rgb(231, 225, 225);
   justify-content: center;
 }
+
 .board {
   display: grid;
   justify-content: center;
@@ -82,13 +109,15 @@ p {
   align-items: center;
   grid-template-columns: repeat(3, auto);
 }
-#largeBoard {
- 
+.largeBoard {
+  display: flex; 
   flex: 3;
   align-content: center;
+  justify-content: space-evenly;
 }
 .largeTile {
   margin: 10px;
+  padding: 20px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -220,6 +249,7 @@ p {
   .largeBoard {
     display: flex;
     flex-direction: column;
+    align-content: center;
   }
 
   /* .largeTile {

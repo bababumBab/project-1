@@ -89,7 +89,7 @@ p {
   font-weight: 200;
   font-size: 30px;
   font-family: 'EB Garamond', menlo, monospace;
-  color: rgb(231, 225, 225);
+  color: rgb(148, 142, 142);
 }
 
 p.rules {
@@ -97,7 +97,7 @@ p.rules {
   font-weight: 100;
   font-size: 15px;
   font-family: 'EB Garamond', menlo, monospace;
-  color: rgb(231, 225, 225);
+  color: rgb(148, 142, 142);
   justify-content: center;
 }
 
@@ -109,15 +109,13 @@ p.rules {
   align-items: center;
   grid-template-columns: repeat(3, auto);
 }
-.largeBoard {
-  display: flex; 
+#largeBoard {
+ 
   flex: 3;
   align-content: center;
-  justify-content: space-evenly;
 }
 .largeTile {
   margin: 10px;
-  padding: 20px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -249,7 +247,6 @@ p.rules {
   .largeBoard {
     display: flex;
     flex-direction: column;
-    align-content: center;
   }
 
   /* .largeTile {

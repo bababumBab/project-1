@@ -204,8 +204,6 @@ The game is built using 9 grids individual gridas that hava as childred a 3 x 3.
 ```
 
 ### Translating the rules of the game into small steps
- 
-### Translating the rules of the game into small steps
 
 Ultimate Tic Tac Toe is a mixture of a relaxing game that in the same time stimulates your brain and digs deeper in that strategy part. 
 

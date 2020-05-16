@@ -1,6 +1,7 @@
 ### ![GA](https://cloud.githubusercontent.com/assets/40461/8183776/469f976e-1432-11e5-8199-6ac91363302b.png) General Assembly, Software Engineering Immersive
 # Ultimate Tic Tac Toe
-
+![alt text](https://github.com/bababumBab/project-1/blob/master/images/Screenshot%202020-05-16%20at%2020.58.58.png
+'Ultimate Tic Tac Toe')
 ## Overview
 Ultimate Tic Tac Toe game is my first front-end development project, produced as part of General Assembly's Immersive Software Engineering Bootcamp - February-April 2020.
 
@@ -16,6 +17,7 @@ I wanted in this project to make sure that all the initial knowledge gathered in
 
 
 You can play the game [here](https://bababumbab.github.io/project-1/) 
+
 
 
 ## The Brief 

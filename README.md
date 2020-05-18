@@ -42,7 +42,7 @@ You can play the game [here](https://bababumbab.github.io/project-1/)
 
 
 ## The Approach
-  My approach was to deconstruct the principles applied in the Tic Tac Toe game and scale the game to a Ultimate Tic Tac Toe that uses 9 small games of 3 X 3 cells
+  My approach was to deconstruct the principles applied in the Tic Tac Toe game and scale the game to a Ultimate Tic Tac Toe that uses 9 small games of 3 X 3 cells.
 
 ### The Grid
 

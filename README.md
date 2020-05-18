@@ -222,7 +222,7 @@ const WINNING_COMBINATIONS = [
     [2, 4, 6]
   ]
 ```
-The start of the game when you click on a cell is made possible by the two functions bellow
+The start of the game when you click on a cell is made possible by the two functions bellow:
 ```js
  function enableAllTiles() {
     document.querySelectorAll('[data-cell]:not(.disabled)').forEach(cell => {

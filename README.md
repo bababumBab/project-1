@@ -207,7 +207,7 @@ The game is built using 9 grids individual gridas that hava as childred a 3 x 3.
 
 Ultimate Tic Tac Toe is a mixture of a relaxing game that in the same time stimulates your brain and digs deeper in that strategy part. 
 
-Deciding in what tile (small game) your opponenet will make his move gives you control and in the same time the ability to train for 2 or 3 steps in advance.
+Deciding in what tile (small game) your opponent will make his move gives you control and in the same time the ability to train for 2 or 3 steps in advance.
 
 Creating an array of numbers for the winning combinations of the small game was one the first steps needed to build upon:
 ```js
